@@ -8,3 +8,7 @@ speeds <- read_csv("pseed.calibration.csv")
 pseed2 <- pseed%>%
   left_join(speeds,by=c("speed"="vol"))%>%
   print()
+#Join pseed body lengths to thew new table 
+pseed2 <- pseed2%>%
+  left_join(pseed.bl,by="fish")%>%
+  print()
