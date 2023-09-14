@@ -6,6 +6,8 @@ library(features)
 pseed <- read_csv("pseed.fin.amps.csv")
 pseed.bl <- read_csv("pseed.lengths.csv")
 speeds <- read_csv("pseed.calibration.csv")
+## Question 1: Make pseed.wide tibble##
+
 #Join "pseed" table with water tunnel speed data table, "speeds"
 pseed2 <- pseed%>%
   left_join(speeds,by=c("speed"="vol"))%>%
@@ -78,3 +80,19 @@ pseed.max %>%
   group_by(fish, bl.s) %>%
   summarize(mean.max=mean(amp.bl)) %>%
   ggplot(aes(x=bl.s,y=mean.max,col=fish))+geom_point()+geom_smooth(method="lm")
+pseed2
+pseed2 <- pseed2 %>%
+  group_by(date,frame) %>%
+  mutate(amp.sum=sum(amp.bl))
+pseed2 %>%
+  filter(fin=="R")
+pseed.wide <- pseed2 %>%
+  select(-amp)%>%
+  pivot_wider(names_from = fin,values_from = amp.bl) %>%
+  mutate(amp.sum=L+R)%>%
+  print() 
+##Question 2 - Make a custom function to compute the standard error of the mean##
+standard.error <- function(x) {
+  (sd(x)/(sqrt(length(x))))
+}
+standard.error(c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16))
