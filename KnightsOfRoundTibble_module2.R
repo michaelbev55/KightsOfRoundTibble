@@ -95,4 +95,8 @@ pseed.wide <- pseed2 %>%
 standard.error <- function(x) {
   (sd(x)/(sqrt(length(x))))
 }
-standard.error(c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16))
+##Question 3 - 
+pseed.sum.max <- pseed.wide %>% 
+  group_by(fish,frame,date) %>% 
+  mutate(amp.sum.mean = mean(max(amp.sum)))
+pseed.sum.max
