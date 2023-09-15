@@ -94,9 +94,11 @@ pseed.wide <- pseed2 %>%
 ##Question 2 - Make a custom function to compute the standard error of the mean##
 standard.error <- function(x) {
   (sd(x)/(sqrt(length(x))))
+  
 }
 ##Question 3 - 
 pseed.sum.max <- pseed.wide %>%
   group_by(fish,bl.s) %>% 
-  mutate(amp.sum.se = standard.error(amp.sum)) %>% 
-  summarise(amp.sum.mean = max(amp.sum))
+  summarise(amp.sum.mean = max(amp.sum),
+            amp.sum.se = standard.error(amp.sum))
+pseed.sum.max
