@@ -96,9 +96,16 @@ standard.error <- function(x) {
   (sd(x)/(sqrt(length(x))))
   
 }
-##Question 3 - 
+##Question 3 + Question 4
 pseed.sum.max <- pseed.wide %>%
   group_by(fish,bl.s) %>% 
   summarise(amp.sum.mean = max(amp.sum),
             amp.sum.se = standard.error(amp.sum))
 pseed.sum.max
+#Question 5 - plot the mean amp.sum vs. specific swimming speed
+pseed.sum.max%>%
+  ggplot(aes(y=amp.sum.mean,x=bl.s,col=fish))+geom_point() + 
+  labs(y = "Specific Speeds", x = "Amp.Sum.Mean") +
+  geom_errorbar(aes(ymax = amp.sum.mean - amp.sum.se, ymin = amp.sum.mean + amp.sum.se, width = 0.2))
+
+               
